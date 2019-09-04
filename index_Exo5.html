@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Exercice 05 : Système de numération avec filtre.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    </head>
+    <body >
+        <div ng-app="myApp" ng-controller="myCtrl">
+
+            <p>Utilisez un filtre lors de l'affichage du tableau[255,251,200]:</p>
+            <ul>
+                <li ng-repeat="x in counts">{{x | myFormat}}</li>
+            </ul>
+            <p>Ce filtre utilise un service qui convertit les nombres en valeurs hexadecimales</p>
+        </div>
+
+
+
+
+
+        <script>
+            var app = angular.module('myApp', []);
+            app.service('hexafy', function () {
+            this.myFunc = function (x){
+            return x.toString(16);
+            }
+            });
+            app.filter('myFormat', ['hexafy', function (hexafy){
+            return function (x){
+            return hexafy.myFunc(x);
+            };
+            }]);
+            app.controller('myCtrl', function ($scope){
+            $scope.counts = [255, 251, 200];
+            });
+
+        </script>
+    </body>
+</html>
